@@ -78,7 +78,7 @@ if _sortOrder != None:
 		sOrder = ScheduleSortOrder.Descending
 		ssgf.SortOrder = sOrder
 	else:
-		message = "Schedule Sort Order can only be set to Ascending or Descending."
+		message = "Schedule Sort Order can only be \nset to Ascending or Descending.\nCheck your spelling please."
 
 definition.AddSortGroupField(ssgf)
 
