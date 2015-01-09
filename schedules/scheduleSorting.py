@@ -30,8 +30,8 @@ clr.ImportExtensions(Revit.Elements)
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
-keySchedule = UnwrapElement(IN[0])
-paramName = IN[1]
+_keySchedule = UnwrapElement(IN[0])
+_paramName = IN[1]
 _showBlankLine = IN[2]
 _footerCount = IN[3]
 _footerTitle = IN[4]
@@ -41,46 +41,79 @@ _sortOrder = IN[6]
 #"Start" the transaction
 TransactionManager.Instance.EnsureInTransaction(doc)
 
-message = None
+def getFieldId(schedule, name):
+	definition = schedule.Definition
+	count = definition.GetFieldCount()
+	for i in range(0, count, 1):
+		if definition.GetField(i).GetName() == name:
+			fieldId = definition.GetField(i).FieldId
+	return fieldId
 
-definition = keySchedule.Definition
-if definition.GetSortGroupFieldCount() != 0:
-	definition.ClearSortGroupFields()
-count = definition.GetFieldCount()
+def addSortingField(schedule, ssgf):
+	message = None
+	definition = schedule.Definition
+	try:
+		definition.AddSortGroupField(ssgf)
+	except:
+		message = "You can add Max of 4 sorting/grouping parameters."
+		pass
+	return message
+	
+def createSortingField(fieldId, blank, fCount, fTitle, header, sOrder):
+	message = None
+	ssgf = ScheduleSortGroupField()
+	ssgf.FieldId = fieldId
 
-for i in range(0, count, 1):
-	if definition.GetField(i).GetName() == paramName:
-		fieldId = definition.GetField(i).FieldId
+	if blank != None:
+		ssgf.ShowBlankLine = blank
 
-ssgf = ScheduleSortGroupField()
-ssgf.FieldId = fieldId
-
-if _showBlankLine != None:
-	ssgf.ShowBlankLine = _showBlankLine
-
-checkList = [_footerCount, _footerTitle]
-if any(item == True for item in checkList):
-	ssgf.ShowFooter = True
-	if _footerCount != None:
-		ssgf.ShowFooterCount = _footerCount
-	if _footerTitle != None:
-		ssgf.ShowFooterTitle = _footerTitle
-else:
-	ssgf.ShowFooter = False
-
-if _header != None:
-	ssgf.ShowHeader = _header
-if _sortOrder != None:
-	if _sortOrder == "Ascending":
-		sOrder = ScheduleSortOrder.Ascending
-		ssgf.SortOrder = sOrder
-	elif _sortOrder == "Descending":
-		sOrder = ScheduleSortOrder.Descending
-		ssgf.SortOrder = sOrder
+	checkList = [fCount, fTitle]
+	if any(item == True for item in checkList):
+		ssgf.ShowFooter = True
+		if fCount != None:
+			ssgf.ShowFooterCount = fCount
+		if fTitle != None:
+			ssgf.ShowFooterTitle = fTitle
 	else:
-		message = "Schedule Sort Order can only be \nset to Ascending or Descending.\nCheck your spelling please."
+		ssgf.ShowFooter = False
 
-definition.AddSortGroupField(ssgf)
+	if header != None:
+		ssgf.ShowHeader = header
+	if sOrder != None:
+		if sOrder == "Ascending":
+			sortO = ScheduleSortOrder.Ascending
+			ssgf.SortOrder = sortO
+		elif sOrder == "Descending":
+			sortO = ScheduleSortOrder.Descending
+			ssgf.SortOrder = sortO
+		else:
+			message = "Schedule Sort Order can only be \nset to Ascending or Descending.\nCheck your spelling please."
+	if message == None:
+		return ssgf
+	else:
+		return message
+
+if type(_paramName) == list:
+	definition = _keySchedule.Definition
+	if definition.GetSortGroupFieldCount() != 0:
+		definition.ClearSortGroupFields()
+	for i,j,k,l,m,n in zip(_paramName, _showBlankLine, _footerCount, _footerTitle, _header, _sortOrder):
+		fieldId = getFieldId(_keySchedule, i)
+		ssgf = createSortingField(fieldId, j, k, l, m, n)
+		if type(ssgf) == str:
+			message = "Schedule Sort Order can only be \nset to Ascending or Descending.\nCheck your spelling please."
+		else:
+			message = addSortingField(_keySchedule, ssgf)
+else:
+	definition = _keySchedule.Definition
+	if definition.GetSortGroupFieldCount() != 0:
+		definition.ClearSortGroupFields()
+	fieldId = getFieldId(_keySchedule, _paramName)
+	ssgf = createSortingField(fieldId, _showBlankLine, _footerCount, _footerTitle, _header, _sortOrder)
+	if type(ssgf) == str:
+		message = "Schedule Sort Order can only be \nset to Ascending or Descending.\nCheck your spelling please."
+	else:
+		message = addSortingField(_keySchedule, ssgf)
 
 # "End" the transaction
 TransactionManager.Instance.TransactionTaskDone()
