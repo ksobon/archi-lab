@@ -30,85 +30,65 @@ clr.ImportExtensions(Revit.Elements)
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
-keySchedule = UnwrapElement(IN[0])
-paramName = IN[1]
+_keySchedule = UnwrapElement(IN[0])
+_paramName = IN[1]
 _columnHeading = IN[2]
 _hidden = IN[3]
 _headingOrientation = IN[4]
 _horizontalAlignment = IN[5]
 _sheetColumnWidth = IN[6]
 
+def getField(schedule, name):
+	definition = schedule.Definition
+	count = definition.GetFieldCount()
+	for i in range(0, count, 1):
+		if definition.GetField(i).GetName() == name:
+			field = definition.GetField(i)
+	return field
+
+def formatColumn(field, heading, hidden, hOrientation, hAlign, sWidth):
+	message = None
+	if heading != None:
+		field.ColumnHeading = heading
+	if hidden != None:
+		field.IsHidden = hidden
+	if hOrientation != None:
+		if hOrientation == "Horizontal":
+			ho = ScheduleHeadingOrientation.Horizontal
+			field.HeadingOrientation = ho
+		elif hOrientation == "Vertical":
+			ho = ScheduleHeadingOrientation.Vertical
+			field.HeadingOrientation = ho
+		else:
+			message = "Schedule Heading Orientation can only \nbe set to Horizontal or Vertical. \nPlease check your spelling."
+	if hAlign != None:
+		if hAlign == "Left":
+			ha = ScheduleHorizontalAlignment.Left
+			field.HorizontalAlignment = ha
+		elif hAlign == "Center":
+			ha = ScheduleHorizontalAlignment.Center
+			field.HorizontalAlignment = ha
+		elif hAlign == "Right":
+			ha = ScheduleHorizontalAlignment.Right
+			field.HorizontalAlignment = ha
+		else:
+			message = "Schedule Horizontal Alignment can only \nbe set to Left, Center or Right. \nPlease check your spelling."
+	if sWidth != None:
+		field.SheetColumnWidth = sWidth
+	return message
+
 #"Start" the transaction
 TransactionManager.Instance.EnsureInTransaction(doc)
 
 message = None
-
-definition = keySchedule.Definition
-count = definition.GetFieldCount()
-for i in range(0, count, 1):
-	if definition.GetField(i).GetName() == paramName:
-		field = definition.GetField(i)
-
-if _columnHeading != None:
-	field.ColumnHeading = _columnHeading
-if _hidden != None:
-	field.IsHidden = _hidden
-if _headingOrientation != None:
-	if _headingOrientation == "Horizontal":
-		ho = ScheduleHeadingOrientation.Horizontal
-		field.HeadingOrientation = ho
-	elif _headingOrientation == "Vertical":
-		ho = ScheduleHeadingOrientation.Vertical
-		field.HeadingOrientation = ho
-	else:
-		message = "Schedule Heading Orientation can only \nbe set to Horizontal or Vertical. \nPlease check your spelling."
-if _horizontalAlignment != None:
-	if _horizontalAlignment == "Left":
-		ha = ScheduleHorizontalAlignment.Left
-		field.HorizontalAlignment = ha
-	elif _horizontalAlignment == "Center":
-		ha = ScheduleHorizontalAlignment.Center
-		field.HorizontalAlignment = ha
-	elif _horizontalAlignment == "Right":
-		ha = ScheduleHorizontalAlignment.Right
-		field.HorizontalAlignment = ha
-	else:
-		message = "Schedule Horizontal Alignment can only \nbe set to Left, Center or Right. \nPlease check your spelling."
-
-if _sheetColumnWidth != None:
-	field.SheetColumnWidth = _sheetColumnWidth
-
-"""
-ssgf = ScheduleSortGroupField()
-ssgf.FieldId = fieldId
-
-if _showBlankLine != None:
-	ssgf.ShowBlankLine = _showBlankLine
-
-checkList = [_footerCount, _footerTitle]
-if any(item == True for item in checkList):
-	ssgf.ShowFooter = True
-	if _footerCount != None:
-		ssgf.ShowFooterCount = _footerCount
-	if _footerTitle != None:
-		ssgf.ShowFooterTitle = _footerTitle
+if type(_paramName) == list:
+	for i, j, k, l, m, n in zip(_paramName, _columnHeading, _hidden, _headingOrientation, _horizontalAlignment, _sheetColumnWidth):
+		scheduleField = getField(_keySchedule, i)
+		message = formatColumn(scheduleField, j, k, l, m , n)
 else:
-	ssgf.ShowFooter = False
+	scheduleField = getField(_keySchedule, _paramName)
+	message = formatColumn(scheduleField, _columnHeading, _hidden, _headingOrientation, _horizontalAlignment, _sheetColumnWidth)
 
-if _header != None:
-	ssgf.ShowHeader = _header
-if _sortOrder != None:
-	if _sortOrder == "Ascending":
-		sOrder = ScheduleSortOrder.Ascending
-		ssgf.SortOrder = sOrder
-	elif _sortOrder == "Descending":
-		sOrder = ScheduleSortOrder.Descending
-		ssgf.SortOrder = sOrder
-	else:
-		message = "Schedule Sort Order can only be \nset to Ascending or Descending.\nCheck your spelling please."
-
-definition.AddSortGroupField(ssgf)
-"""
 # "End" the transaction
 TransactionManager.Instance.TransactionTaskDone()
 
