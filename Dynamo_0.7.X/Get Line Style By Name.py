@@ -20,16 +20,18 @@ doc = DocumentManager.Instance.CurrentDBDocument
 uiapp = DocumentManager.Instance.CurrentUIApplication
 app = uiapp.Application
 
+from System.Collections.Generic import *
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
 name = IN[0]
 
 lineStyles = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Lines)
-replacementStyles = []
+lStyle = []
 try:
-	replacementStyles.append(next(i.LineStyle for i in lineStyles if name==i.LineStyle.Name))
+	lStyle.append(next(i.LineStyle for i in lineStyles if name==i.LineStyle.Name))
 except StopIteration:
 	pass
 
-OUT = replacementStyles
+OUT = lStyle[0]
