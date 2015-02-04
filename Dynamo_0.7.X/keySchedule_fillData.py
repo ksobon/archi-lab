@@ -58,7 +58,7 @@ for key in allKeys:
 
 for i, j in zip(params, data):
 	for param, value in zip(i,j):
-		param.Set(str(value))
+		param.Set(value)
 
 
 # "End" the transaction
