@@ -11,8 +11,6 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
 
-from System.Collections.Generic import *
-
 # Import RevitAPI
 clr.AddReference("RevitAPI")
 import Autodesk
@@ -28,16 +26,25 @@ clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
 
+# Import ToProtoType, ToRevitType geometry conversion extension methods
+clr.ImportExtensions(Revit.GeometryConversion)
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
+filledRegions = UnwrapElement(IN[0])
 
-boundaries, temp_lst = [], []
-collector = FilteredElementCollector(doc, doc.ActiveView.Id).OfClass(FilledRegion)
-for i in collector:
-	if len(i.GetBoundaries()) !=1:
-		boundaries.append([val for subl in i.GetBoundaries() for val in subl])
-	else:
-		boundaries.extend(i.GetBoundaries())
-	
+def process_list(_func, _list):
+    return map( lambda x: process_list(_func, x) if type(x)==list else _func(x), _list )
+
+def ToDSType(item):
+	curves = []
+	for i in item:
+		curves.append(i.ToProtoType())
+	return curves
+
+curves = []
+for i in filledRegions:
+	curves.append(process_list(ToDSType, i.GetBoundaries()))
+
 #Assign your output to the OUT variable
-OUT = boundaries
+OUT = curves
