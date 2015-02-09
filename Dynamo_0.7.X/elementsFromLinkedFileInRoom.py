@@ -37,7 +37,7 @@ def FamiliesInRoom(_room, _families, _transform):
 	for family in _families:
 		pt = _transform.OfPoint(family.Location.Point)
 		if _room.IsPointInRoom(pt):
-			outList.append(family.Symbol.Family)
+			outList.append(family)
 	return outList
 
 families = []
