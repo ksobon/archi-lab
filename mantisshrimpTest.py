@@ -458,29 +458,32 @@ class MSBrep(object):
         def toDSPolySurface(self, units):
                 dsFaces = []
                 for face, loop in zip(self.faces, self.trims):
-                        trimLoops = []
                         dsFace = face.toDSNurbsSurface(units)
-                        for trim in loop:
-                                dsTrims = []
-                                for curve in trim:
-                                        if type(curve) == MSNurbsCurve:
-                                                dsTrims.append(curve.toDSNurbsCurve(units))
-                                        elif type(curve) == MSMultiSpanNurbsCurve:
-                                                for i in curve.curves:
-                                                        dsTrims.append(i.toDSNurbsCurve(units))
-                                        elif type(curve) == MSLine:
-                                                dsTrims.append(curve.toDSLine(units))
-                                        elif type(curve) == MSCircle:
-                                                dsTrims.append(curve.toDSCircle(units))
-                                        elif type(curve) == MSArc:
-                                                dsTrims.append(curve.toDSArc(units))
-                                        elif type(curve) == MSEllipse:
-                                                dsTrims.append(curve.toDSEllipse(units))
-                                        elif type(curve) == MSPolyCurve:
-                                                dsTrims.append(curve.toDSPolyCurve(units))
-                                        elif type(curve) == MSPolyLine:
-                                                dsTrims.append(curve.toDSPolyCurve(units))
-                                curveArray = List[ds.Geometry.Curve](dsTrims)
-                                trimLoops.append(ds.Geometry.PolyCurve.ByJoinedCurves(curveArray))
-                        dsFaces.append(dsFace.TrimWithEdgeLoops(trimLoops))
+                        if len(loop) != 0:
+                                trimLoops = []
+                                for trim in loop:
+                                        dsTrims = []
+                                        for curve in trim:
+                                                if type(curve) == MSNurbsCurve:
+                                                        dsTrims.append(curve.toDSNurbsCurve(units))
+                                                elif type(curve) == MSMultiSpanNurbsCurve:
+                                                        for i in curve.curves:
+                                                                dsTrims.append(i.toDSNurbsCurve(units))
+                                                elif type(curve) == MSLine:
+                                                        dsTrims.append(curve.toDSLine(units))
+                                                elif type(curve) == MSCircle:
+                                                        dsTrims.append(curve.toDSCircle(units))
+                                                elif type(curve) == MSArc:
+                                                        dsTrims.append(curve.toDSArc(units))
+                                                elif type(curve) == MSEllipse:
+                                                        dsTrims.append(curve.toDSEllipse(units))
+                                                elif type(curve) == MSPolyCurve:
+                                                        dsTrims.append(curve.toDSPolyCurve(units))
+                                                elif type(curve) == MSPolyLine:
+                                                        dsTrims.append(curve.toDSPolyCurve(units))
+                                        curveArray = List[ds.Geometry.Curve](dsTrims)
+                                        trimLoops.append(ds.Geometry.PolyCurve.ByJoinedCurves(curveArray))
+                                dsFaces.append(dsFace.TrimWithEdgeLoops(trimLoops))
+                        else:
+                                dsFaces.append(dsFace)
                 return ds.Geometry.PolySurface.ByJoinedSurfaces(dsFaces)
