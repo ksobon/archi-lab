@@ -304,7 +304,7 @@ class MSPolyCurve(object):
                         elif type(crv) == MSNurbsCurve:
                                 rhSubCurves.append(crv.toRHNurbsCurve(units))
                 return rc.Geometry.Curve.JoinCurves(rhSubCurves)
-
+"""
 class MSMeshFace(object):
         def __init__(self, a= None, b= None, c= None, d= None):
                 self.a = a
@@ -356,6 +356,27 @@ class MSMesh(object):
                 rhFaceArray = Array[rc.Geometry.MeshFace](rhFaces)
                 rhMesh.Faces.AddFaces(rhFaceArray)
                 return rhMesh
+"""
+class MSMesh(object):
+
+        def __init__(self, points = None, faceTopology = None):
+                self.points = points
+                self.faceTopology = faceTopology
+        def addData(self, data):
+                self.data = data
+        def toDSMesh(self, units):
+                dsIndexGroups = []
+                for i in self.faceTopology:
+                        if len(i) == 3:
+                                dsIndexGroups.append(ds.Geometry.IndexGroup.ByIndices(i[0], i[1], i[2]))
+                        else:
+                                dsIndexGroups.append(ds.Geometry.IndexGroup.ByIndices(i[0], i[1], i[2], i[3]))
+                dsVertexPositions = []
+                for i in self.points:
+                        dsVertexPositions.append(i.toDSPoint(units))
+                dsMesh = ds.Geometry.Mesh.ByPointsFaceIndices(dsVertexPositions, dsIndexGroups)
+                return dsMesh
+
 
 class MSNurbsSurface(object):
 
