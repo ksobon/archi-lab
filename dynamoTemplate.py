@@ -11,7 +11,7 @@ import Revit
 clr.ImportExtensions(Revit.Elements)
 
 # Import geometry conversion extension methods
-clr.ImportExtensions(Revit.GeometryConversion
+clr.ImportExtensions(Revit.GeometryConversion)
 
 # Import DocumentManager and TransactionManager
 clr.AddReference("RevitServices")
