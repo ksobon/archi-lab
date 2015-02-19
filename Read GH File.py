@@ -1,4 +1,4 @@
-#Copyright(c) 2015, Konrad Sobon
+#Copyright(c) 2014, Konrad Sobon
 # @arch_laboratory, http://archi-lab.net
 
 import clr
@@ -11,15 +11,12 @@ sys.path.append(pyt_path)
 import os
 appDataPath = os.getenv('APPDATA')
 msPath = appDataPath + r"\Dynamo\0.7\packages\Mantis Shrimp\extra"
-"""
 rhPath = appDataPath + r"\Dynamo\0.7\packages\Mantis Shrimp\bin"
-"""
 if msPath not in sys.path:
 	sys.path.Add(msPath)
-"""
 if rhPath not in sys.path:
 	sys.path.Add(rhPath)
-"""
+
 
 possibleRhPaths = []
 possibleRhPaths.append(r"C:\Program Files\Rhinoceros 5 (64-bit)\System\RhinoCommon.dll")
@@ -87,12 +84,6 @@ def toDSObject(item, units):
 		return item.toDSMesh(units)
 	elif type(item) == MSNurbsSurface:
 		return item.toDSNurbsSurface(units)
-	#elif type(item) == MSPolySurface:
-		#return item.toDSPolySurface(units)
-	elif type(item) == MSBrep:
-		return item.toDSPolySurface(units)
-	elif type(item) == MSData:
-		return item.data
 	else:
 		return "Geometry type not yet supported"
 
@@ -102,36 +93,9 @@ if _import:
 		geometryOut = serializedData.data
 	else:
 		rhUnits = serializedData.pop(0).data
-		geometryOut = ProcessList(toDSObject, serializedData, rhUnits)	
+		geometryOut = ProcessList(toDSObject, serializedData, rhUnits)
 else:
 	message = "Import set to false"
-OUT = geometryOut
-"""
-test = []
-dsFaces = []
-data = serializer.data[0]
-
-faces = data.faces
-trims = data.trims
-
-for face, loop in zip(faces, trims):
-	trimLoops = []
-	dsFace = face.toDSNurbsSurface(rhUnits)
-	for trim in loop:
-		dsTrims = []
-		for curve in trim:
-			if type(curve) == MSNurbsCurve:
-				#dsTrims.append(curve.toDSNurbsCurve(rhUnits))
-				test.append(curve.toDSNurbsCurve(rhUnits))
-			elif type(curve) == MSMultiSpanNurbsCurve:
-				for i in curve.curves:
-					test.append(i.toDSNurbsCurve(rhUnits))
-			elif type(curve) == MSEllipse:
-				test.append(curve.toDSEllipse(rhUnits))
-		curveArray = List[Curve](test)
-		trimLoops.append(PolyCurve.ByJoinedCurves(curveArray))
-	trimFace = dsFace.TrimWithEdgeLoops(trimLoops)
 
 #Assign your output to the OUT variable
-OUT = trimFace
-"""
+OUT = geometryOut
