@@ -468,6 +468,12 @@ class MSMultiSpanNurbsCurve(object):
                 self.curves = curves
         def addData(self, data):
                 self.data = data
+        def toDSPolyCurve(self, units):
+                nurbsCurves = []
+                for i in self.curves:
+                        nurbsCurves.append(i.toDSNurbsCurve(units))
+                dsPolyCurve = ds.Geometry.PolyCurve.ByJoinedCurves(nurbsCurves)
+                return dsPolyCurve
 
 class MSBrep(object):
 
