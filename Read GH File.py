@@ -78,6 +78,8 @@ def toDSObject(item, units):
 		return item.toDSArc(units)
 	elif type(item) == MSNurbsCurve:
 		return item.toDSNurbsCurve(units)
+	elif type(item) == MSMultiSpanNurbsCurve:
+		return item.toDSPolyCurve(units)
 	elif type(item) == MSPolyCurve:
 		return item.toDSPolyCurve(units)
 	elif type(item) == MSMesh:
