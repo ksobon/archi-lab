@@ -1,3 +1,6 @@
+#this code is Python adaptation of Nil's original VB component
+# thank you for sharing: http://www.grasshopper3d.com/profile/Nils
+
 import Rhino as rc
 
 x = P0.X
