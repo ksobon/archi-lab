@@ -260,3 +260,4 @@ if _export:
 else:
     msg = "Export set to false."
 ghenv.Component.AddRuntimeMessage(warnType, msg)
+print(geometryOut)
