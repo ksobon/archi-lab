@@ -2,6 +2,7 @@
 # @arch_laboratory, http://archi-lab.net
 
 import clr
+import sys
 clr.AddReference('ProtoGeometry')
 from Autodesk.DesignScript.Geometry import *
 
@@ -27,12 +28,17 @@ clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
 
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+import re
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
 keySchedule = UnwrapElement(IN[0])
 data = IN[1]
 inputParams = IN[2]
+upper = IN[3]
 
 # "Start" the transaction
 TransactionManager.Instance.EnsureInTransaction(doc)
@@ -58,7 +64,15 @@ for key in allKeys:
 
 for i, j in zip(params, data):
 	for param, value in zip(i,j):
-		param.Set(value)
+		if isinstance(value, str):
+			valueDecoded = value.decode('string_escape')
+		else:
+			valueDecoded = str(value).decode('string_escape')
+		if upper:
+			valueDecoded = valueDecoded.upper()
+			param.Set(valueDecoded)
+		else:
+			param.Set(valueDecoded)
 
 
 # "End" the transaction
