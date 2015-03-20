@@ -18,6 +18,7 @@ sys.path.append(pyt_path)
 
 import os.path
 
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
@@ -27,6 +28,7 @@ sheetName = IN[2]
 byColumn = IN[3]
 data = IN[4]
 liveStreaming = IN[5]
+cellFill = IN[6]
 
 def LiveStream():
 	try:
@@ -59,7 +61,12 @@ def GetWorksheet(xlApp, filePath, sheetName):
 		ws = wb.Worksheets[1]
 		return ws
 
-def WriteData(ws, data, byColumn):
+def RGBToHex(rgb):
+	strValue = strValue = '%02x%02x%02x' % rgb
+	iValue = int(strValue, 16)
+	return iValue
+
+def WriteData(ws, data, byColumn, cellFill):
 	originX = ws.UsedRange.Row
 	originY = ws.UsedRange.Column
 	boundX = len(data)
@@ -68,10 +75,16 @@ def WriteData(ws, data, byColumn):
 		for x in range(0, len(data), 1):
 			for y in range(0, len(data[0]), 1):
 				ws.Cells[y+1, x+1] = data[x][y]
+				if cellFill != None:
+					dsColor = cellFill[x][y]
+					ws.Cells[y+1, x+1].Interior.Color = RGBToHex((dsColor.Red, dsColor.Green, dsColor.Blue))
 	else:
 		for x in range(0, len(data), 1):
 			for y in range(0, len(data[0]), 1):
-				ws.Cells[x+1,y+1] = data[x][y]
+				ws.Cells[x+1, y+1] = data[x][y]
+				if cellFill != None:
+					dsColor = cellFill[x][y]
+					ws.Cells[x+1, y+1].Interior.Color = RGBToHex((dsColor.Red, dsColor.Green, dsColor.Blue))
 	return ws
 
 if runMe:
@@ -85,7 +98,7 @@ if runMe:
 			ws = xlApp.ActiveSheet
 			ws.Cells.ClearContents()
 			ws.Cells.Clear()
-			WriteData(ws, data, byColumn)
+			WriteData(ws, data, byColumn, cellFill)
 	else:
 		# check if excel is open if its open close it before doing all this
 		# otherwise it will throw an error
@@ -96,7 +109,7 @@ if runMe:
 		xlApp.ScreenUpdating = False
 		wb = GetWorkbook(xlApp, filePath)
 		ws = GetWorksheet(xlApp, filePath, sheetName)
-		WriteData(ws, data, byColumn)
+		WriteData(ws, data, byColumn, cellFill)
 		wb.SaveAs(str(filePath))
 		xlApp.ActiveWorkbook.Close(False)
 		xlApp.screenUpdating = True
