@@ -12,8 +12,7 @@ import re
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
-cellAddress = str(IN[0])
-sheet = IN[1]
+cellAddress = IN[0]
 
 def ConvertNumber(num):
 	letters = ''
@@ -30,7 +29,7 @@ def ConvertChar(char):
 			return False
 		number += ord(l.upper()) - 64 + 25
 	return number
-
+"""
 match = re.match(r"([a-z]+)([0-9]+)", cellAddress, re.I)
 if match:
     addressItems = match.groups()
@@ -40,6 +39,11 @@ column = int(addressItems[1])
 
 if sheet == None:
 	sheet = 0
-	
+"""
+
+row = ConvertNumber(cellAddress[0])
+column = cellAddress[1]
+sheet = cellAddress[2]
+
 #Assign your output to the OUT variable
-OUT = row, column, sheet
+OUT = row + str(column), sheet
