@@ -34,35 +34,14 @@ def LiveStream():
 	try:
 		xlApp = Marshal.GetActiveObject("Excel.Application")
 		xlApp.Visible = True
-		xlApp.DisplayAlerts = True
+		xlApp.DisplayAlerts = False
 		xlApp.ScreenUpdating = True
 		return xlApp
 	except:
 		return None
 
-def GetWorkbook(xlApp, filePath):
-	if os.path.isfile(str(filePath)):
-		xlApp.Workbooks.open(str(filePath))
-		wb = xlApp.ActiveWorkbook
-		return wb
-	else:
-		wb = xlApp.Workbooks.Add()
-		return wb
-
-def GetWorksheet(xlApp, filePath, sheetName):
-	if os.path.isfile(str(filePath)):
-		xlApp.Workbooks.open(str(filePath))
-		ws = xlApp.Sheets(sheetName)
-		ws.Cells.ClearContents()
-		ws.Cells.Clear()
-		return ws
-	else:
-		wb = xlApp.Workbooks.Add()
-		ws = wb.Worksheets[1]
-		return ws
-
 def RGBToHex(rgb):
-	strValue = strValue = '%02x%02x%02x' % rgb
+	strValue = '%02x%02x%02x' % rgb
 	iValue = int(strValue, 16)
 	return iValue
 
@@ -91,7 +70,7 @@ if runMe:
 	message = None
 	if liveStreaming:
 		if LiveStream() == None:
-			message = "Please open an excel session for Live Stream"
+			message = "Please open an Excel session for \nLive Stream mode."
 		else:
 			xlApp = LiveStream()
 			wb = xlApp.ActiveWorkbook
@@ -100,33 +79,36 @@ if runMe:
 			ws.Cells.Clear()
 			WriteData(ws, data, byColumn, cellFill)
 	else:
-		# check if excel is open if its open close it before doing all this
-		# otherwise it will throw an error
-		
-		xlApp = Excel.ApplicationClass()
-		xlApp.Visible = False
-		xlApp.DisplayAlerts = False
-		xlApp.ScreenUpdating = False
-		wb = GetWorkbook(xlApp, filePath)
-		ws = GetWorksheet(xlApp, filePath, sheetName)
-		WriteData(ws, data, byColumn, cellFill)
-		wb.SaveAs(str(filePath))
-		xlApp.ActiveWorkbook.Close(False)
-		xlApp.screenUpdating = True
-		Marshal.CleanupUnusedObjectsInCurrentContext()
-		Marshal.ReleaseComObject(xlApp)
-
-	"""
-	rng = ws.Range[ws.Cells(originX, originY), ws.Cells(boundX, boundY)].Value2
-	arr = Array.CreateInstance(int, boundX, boundY)
-	for i in range(0, len(data),1):
-		for j in range(0,len(data[0]), 1):
-			arr.SetValue(data[i][j], i,j)
-	rng = arr
-	"""
+		if LiveStream() == None:
+			xlApp = Excel.ApplicationClass()
+			xlApp.Visible = False
+			xlApp.DisplayAlerts = False
+			xlApp.ScreenUpdating = False
+			if os.path.isfile(str(filePath)):
+				xlApp.Workbooks.open(str(filePath))
+				wb = xlApp.ActiveWorkbook
+				ws = xlApp.Sheets(sheetName)
+				ws.Cells.ClearContents()
+				ws.Cells.Clear()
+			else:
+				wb = xlApp.Workbooks.Add()
+				ws = wb.Worksheets[1]
+			WriteData(ws, data, byColumn, cellFill)
+			wb.SaveAs(str(filePath))
+			xlApp.ActiveWorkbook.Close(False)
+			xlApp.ScreenUpdating = True
+			#Marshal.CleanupUnusedObjectsInCurrentContext()
+			Marshal.ReleaseComObject(ws)
+			Marshal.ReleaseComObject(wb)
+			Marshal.ReleaseComObject(xlApp)
+			#Marshal.FinalReleaseComObject(xlApp)
+		else:
+			message = "Close currently running Excel \nsession or switch to Live Stream \nmode."
+else:
+	message = "Run Me is set to False. Please set \nto True if you wish to write data \nto Excel."
 
 #Assign your output to the OUT variable
 if message == None:
 	OUT = "Success!"
 else:
-	OUT = message
+	OUT = '\n'.join('{:^35}'.format(s) for s in message.split('\n'))
