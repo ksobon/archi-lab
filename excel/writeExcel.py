@@ -29,6 +29,18 @@ byColumn = IN[3]
 data = IN[4]
 liveStreaming = IN[5]
 cellFill = IN[6]
+borderStyle = IN[7]
+
+def GetLineStyle(key):
+	keys = ["Continuous", "Dash", "DashDot", "DashDotDot", "RoundDot", "SquareDotMSO", "LongDash", "DoubleXL", "NoneXL"]
+	values = [1, -4115, 4, 5, -4118, -4118, -4115, -4119, -4142]
+	d = dict()
+	for i in range(len(keys)):
+		d[keys[i]] = values[i]
+	if key in d:
+		return d[key]
+	else:
+		return None
 
 def LiveStream():
 	try:
@@ -45,7 +57,7 @@ def RGBToHex(rgb):
 	iValue = int(strValue, 16)
 	return iValue
 
-def WriteData(ws, data, byColumn, cellFill):
+def WriteData(ws, data, byColumn, cellFill, borderStyle):
 	originX = ws.UsedRange.Row
 	originY = ws.UsedRange.Column
 	boundX = len(data)
@@ -57,6 +69,8 @@ def WriteData(ws, data, byColumn, cellFill):
 				if cellFill != None:
 					dsColor = cellFill[x][y]
 					ws.Cells[y+1, x+1].Interior.Color = RGBToHex((dsColor.Red, dsColor.Green, dsColor.Blue))
+				if borderStyle != None:
+					ws.Cells[y+1, x+1].BorderAround(GetLineStyle(borderStyle[x][y]))
 	else:
 		for x in range(0, len(data), 1):
 			for y in range(0, len(data[0]), 1):
@@ -64,6 +78,8 @@ def WriteData(ws, data, byColumn, cellFill):
 				if cellFill != None:
 					dsColor = cellFill[x][y]
 					ws.Cells[x+1, y+1].Interior.Color = RGBToHex((dsColor.Red, dsColor.Green, dsColor.Blue))
+				if borderStyle != None:
+					ws.Cells[x+1, y+1].BorderAround(GetLineStyle(borderStyle[x][y]))
 	return ws
 
 if runMe:
@@ -77,7 +93,7 @@ if runMe:
 			ws = xlApp.ActiveSheet
 			ws.Cells.ClearContents()
 			ws.Cells.Clear()
-			WriteData(ws, data, byColumn, cellFill)
+			WriteData(ws, data, byColumn, cellFill, borderStyle)
 	else:
 		if LiveStream() == None:
 			xlApp = Excel.ApplicationClass()
@@ -93,15 +109,13 @@ if runMe:
 			else:
 				wb = xlApp.Workbooks.Add()
 				ws = wb.Worksheets[1]
-			WriteData(ws, data, byColumn, cellFill)
+			WriteData(ws, data, byColumn, cellFill, borderStyle)
 			wb.SaveAs(str(filePath))
 			xlApp.ActiveWorkbook.Close(False)
 			xlApp.ScreenUpdating = True
-			#Marshal.CleanupUnusedObjectsInCurrentContext()
 			Marshal.ReleaseComObject(ws)
 			Marshal.ReleaseComObject(wb)
 			Marshal.ReleaseComObject(xlApp)
-			#Marshal.FinalReleaseComObject(xlApp)
 		else:
 			message = "Close currently running Excel \nsession or switch to Live Stream \nmode."
 else:
