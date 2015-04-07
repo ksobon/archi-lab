@@ -35,6 +35,14 @@ from System.Collections.Generic import *
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
+# Start Transaction
+doc = DocumentManager.Instance.CurrentDBDocument
+TransactionManager.Instance.EnsureInTransaction(doc)
+
+
+
+# End Transaction
+TransactionManager.Instance.TransactionTaskDone()
 
 
 #Assign your output to the OUT variable
