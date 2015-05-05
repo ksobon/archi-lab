@@ -44,11 +44,9 @@ def GetDimType(name):
 	dimNames = [i.Name for i in dims]
 	for i, j in zip(dims, dimNames):
 		if j == name:
-			dimType = i
-			break
+			return i
 		else:
-			continue
-	return dimType
+			return None
 
 replacementTypes = ProcessList(GetDimType, sReplace)
 
