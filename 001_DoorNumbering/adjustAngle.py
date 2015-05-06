@@ -14,16 +14,23 @@ from Autodesk.DesignScript.Geometry import *
 dataEnteringNode = IN[0]
 import math
 
-door_x = IN[0]
-room_x = IN[1]
-angle = IN[2]
-result = []
+repAngle = IN[0]
+roomX = IN[1]
+roomY = IN[2]
+doorX = IN[3]
+doorY = IN[4]
 
-for i, j, k in zip(door_x, room_x, angle):
-	if i <= j:
-		result.append(math.pi+((math.pi)-k))
-	else:
-		result.append(k)
+result = []
+for a, rx, ry, dx, dy in zip(repAngle, roomX, roomY, doorX, doorY):
+	if dx >= rx  and dy >= ry:
+		angle = a
+	elif dx >= rx and dy <= ry:
+		angle = 180 - a
+	elif dx <= rx and dy <= ry:
+		angle = 180 + a
+	elif dx <= rx and dy >= ry:
+		angle = 360 - a
+	result.append(angle)
 
 #Assign your output to the OUT variable
 OUT = result
