@@ -38,10 +38,12 @@ sys.path.append(pyt_path)
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
+def ProcessList(_func, _list):
+    return map( lambda x: ProcessList(_func, x) if type(x)==list else _func(x), _list )
+
 # Start Transaction
 doc = DocumentManager.Instance.CurrentDBDocument
 TransactionManager.Instance.EnsureInTransaction(doc)
-
 
 
 # End Transaction
