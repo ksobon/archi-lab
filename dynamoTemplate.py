@@ -32,6 +32,9 @@ import System
 from System import Array
 from System.Collections.Generic import *
 
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
