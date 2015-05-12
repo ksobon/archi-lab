@@ -38,10 +38,7 @@ views = UnwrapElement(IN[3])
 boolean = IN[4]
 
 def toRvtPoint(point):
-	x = Autodesk.Revit.DB.UnitUtils.Convert(point.X, DisplayUnitType.DUT_METERS, DisplayUnitType.DUT_DECIMAL_FEET)
-	y = Autodesk.Revit.DB.UnitUtils.Convert(point.Y, DisplayUnitType.DUT_METERS, DisplayUnitType.DUT_DECIMAL_FEET)
-	z = Autodesk.Revit.DB.UnitUtils.Convert(point.Z, DisplayUnitType.DUT_METERS, DisplayUnitType.DUT_DECIMAL_FEET)
-	return Autodesk.Revit.DB.XYZ(x,y,z)
+	return Autodesk.Revit.DB.XYZ(point.X,point.Y,point.Z)
 
 def toRvtId(_id):
 	if isinstance(_id, int) or isinstance(_id, str):
