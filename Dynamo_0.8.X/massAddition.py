@@ -10,17 +10,25 @@ dataEnteringNode = IN
 
 input = IN[0]
 
-total = 0
-if any(isinstance(item, list) for item in input):
-	input = [item for sublist in input for item in sublist]
-for i in input:
-	if i == None or i == "":
-		total = total + 0
-	else:
-		if isinstance(i, str):
-			total = total + int(i)
+def ProcessList(_func, _list):
+	return map(lambda x: ProcessList(_func, x) if type(x) == list else _func(x), _list)
+
+def ConvertToInteger(item):
+	if item == None:
+		return 0
+	elif type(item) == str:
+		if item == "":
+			return 0
 		else:
-			total = total + i
+			return int(item)
+	else:
+		return item
+
+input = ProcessList(ConvertToInteger, input)
+if any(isinstance(item,list) for item in input):
+	output = map(sum,input)
+else:
+	output = sum(input)
 
 #Assign your output to the OUT variable
-OUT = total
+OUT = output
