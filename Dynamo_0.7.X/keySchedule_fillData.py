@@ -67,7 +67,10 @@ for i, j in zip(params, data):
 		if isinstance(value, str):
 			valueDecoded = value.decode('string_escape')
 		else:
-			valueDecoded = str(value).decode('string_escape')
+			if value == None:
+				valueDecoded = " "
+			else:
+				valueDecoded = str(value).decode('string_escape')
 		if upper:
 			valueDecoded = valueDecoded.upper()
 			param.Set(valueDecoded)
