@@ -50,11 +50,16 @@ if any(isinstance(item, list) for item in data):
 	else:
 		tableData = keySchedule.GetTableData()
 		sectionData = tableData.GetSectionData(SectionType.Body)
-		if sectionData.NumberOfRows - 2 != len(data):
+		if sectionData.NumberOfRows - 2 <= len(data):
 			# schedule by default will have 2 rows (A, B, C and Header Names)
 			rowsToAdd = (len(data) - sectionData.NumberOfRows) + 2
 			for i in range(0, rowsToAdd, 1):
 				sectionData.InsertRow(0)
+		else:
+			# schedule when updating might already have too many rows 
+			rowsToDelete = sectionData.NumberOfRows - 2 - len(data)
+			for i in reversed(range(sectionData.NumberOfRows - rowsToDelete, sectionData.NumberOfRows, 1)):
+				sectionData.RemoveRow(i)
 
 # "End" the transaction
 TransactionManager.Instance.TransactionTaskDone()
