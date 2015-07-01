@@ -15,23 +15,21 @@ dataEnteringNode = IN
 
 _backgroundColor = IN[0]
 _bold = IN[1]
-""" to be added when I figure out how to actually make it work :-)
-_borderBottom = IN[2]
-_borderLeft = IN[3]
-_borderRight = IN[4]
-_borderTop = IN[5]
-"""
 _font = IN[2]
 _fontColor = IN[3]
 _fontSize = IN[4]
 _italics = IN[5]
 _underline = IN[6]
 _orientation = IN[7]
-
 _hAlign = IN[8]
 _vAlign = IN[9]
-
 _headerText = IN[10]
+
+_borderBottom = IN[11]
+_borderLeft = IN[12]
+_borderRight = IN[13]
+_borderTop = IN[14]
+
 
 #design script color to RVT color function
 def dsColorToRvtColor(dsColor):
@@ -46,7 +44,7 @@ if _backgroundColor != None:
 	options.BackgroundColor = True
 if _bold != None:
 	options.Bold = True
-"""
+
 borderOptions = [_borderBottom, _borderLeft, _borderRight, _borderTop]
 if any(item != None for item in borderOptions):
 	options.BorderLineStyle = True
@@ -59,7 +57,7 @@ if _borderRight != None:
 	options.BorderRightLineStyle = True
 if _borderTop != None:
 	options.BorderTopLineStyle = True
-"""
+
 if _font != None:
 	options.Font = True
 if _fontColor != None:
@@ -85,16 +83,16 @@ if _backgroundColor != None:
 	tcs.BackgroundColor = dsColorToRvtColor(_backgroundColor)
 if _bold != None:
 	tcs.IsFontBold = _bold
-"""
+
 if _borderBottom != None:
-	tcs.BorderBottomLineStyle = UnwrapElement(_borderBottom).Id
+	tcs.BorderBottomLineStyle = UnwrapElement(_borderBottom).GraphicsStyleCategory.Id
 if _borderLeft != None:
-	tcs.BorderLeftLineStyle = UnwrapElement(_borderLeft).Id
+	tcs.BorderLeftLineStyle = UnwrapElement(_borderLeft).GraphicsStyleCategory.Id
 if _borderRight != None:
-	tcs.BorderRightLineStyle = UnwrapElement(_borderRight).Id
+	tcs.BorderRightLineStyle = UnwrapElement(_borderRight).GraphicsStyleCategory.Id
 if _borderTop != None:
-	tcs.BorderTopLineStyle = UnwrapElement(_borderTop).Id
-"""
+	tcs.BorderTopLineStyle = UnwrapElement(_borderTop).GraphicsStyleCategory.Id
+
 if _font != None:
 	tcs.FontName = _font
 if _fontColor != None:
