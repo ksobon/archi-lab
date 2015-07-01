@@ -40,8 +40,9 @@ if _tcs != None:
 	tableData = keySchedule.GetTableData()
 	hsd = tableData.GetSectionData(SectionType.Header)
 	hsd.SetCellText(hsd.FirstRowNumber, hsd.FirstColumnNumber, _tcs[1])
-	if hsd.AllowOverrideCellStyle(hsd.FirstRowNumber, hsd.FirstColumnNumber):
-		hsd.SetCellStyle(hsd.FirstRowNumber, hsd.FirstColumnNumber, _tcs[0])
+	if _tcs[0] != None:
+		if hsd.AllowOverrideCellStyle(hsd.FirstRowNumber, hsd.FirstColumnNumber):
+			hsd.SetCellStyle(hsd.FirstRowNumber, hsd.FirstColumnNumber, _tcs[0])
 
 # "End" the transaction
 TransactionManager.Instance.TransactionTaskDone()
