@@ -47,5 +47,16 @@ def GetPhaseDemo(element):
 		return None
 		pass
 
+try:
+	errorReport = None
+	phases = ProcessList(GetPhaseDemo, elements)
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
+	
 #Assign your output to the OUT variable
-OUT = ProcessList(GetPhaseDemo, elements)
+if errorReport == None:
+	OUT = phases
+else:
+	OUT = errorReport
