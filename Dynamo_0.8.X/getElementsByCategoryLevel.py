@@ -45,9 +45,18 @@ def toRvtId(_id):
 	elif isinstance(_id, ElementId):
 		return _id
 
-bic = System.Enum.ToObject(BuiltInCategory, category.Id)
-levelFilter = ElementLevelFilter(toRvtId(level.Id))
-instances = FilteredElementCollector(doc).OfCategory(bic).WherePasses(levelFilter).WhereElementIsNotElementType().ToElements()
+try:
+	errorReport = None
+	bic = System.Enum.ToObject(BuiltInCategory, category.Id)
+	levelFilter = ElementLevelFilter(toRvtId(level.Id))
+	instances = FilteredElementCollector(doc).OfCategory(bic).WherePasses(levelFilter).WhereElementIsNotElementType().ToElements()
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
 
 #Assign your output to the OUT variable
-OUT = instances
+if errorReport == None:
+	OUT = instances
+else:
+	OUT = errorReport
