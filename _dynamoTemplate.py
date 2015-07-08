@@ -42,14 +42,26 @@ dataEnteringNode = IN
 def ProcessList(_func, _list):
     return map( lambda x: ProcessList(_func, x) if type(x)==list else _func(x), _list )
 
+def ProcessListArg(_func, _list, _arg):
+    return map( lambda x: ProcessListArg(_func, x, _arg) if type(x)==list else _func(x, _arg), _list )
+
 # Start Transaction
-doc = DocumentManager.Instance.CurrentDBDocument
 TransactionManager.Instance.EnsureInTransaction(doc)
 
+try:
+	errorReport = None
+
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
 
 # End Transaction
 TransactionManager.Instance.TransactionTaskDone()
 
 
 #Assign your output to the OUT variable
-OUT = 0
+if errorReport == None:
+	OUT = 0
+else:
+	OUT = errorReport
