@@ -16,12 +16,27 @@ from Autodesk.Revit.DB import *
 
 import System
 
+import sys
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
 _linkDoc = IN[0]
 _category = IN[1]
 
-filter = ElementCategoryFilter(System.Enum.ToObject(BuiltInCategory, _category.Id))
+try:
+	errorReport = None
+	filter = ElementCategoryFilter(System.Enum.ToObject(BuiltInCategory, _category.Id))
+	result = FilteredElementCollector(_linkDoc).WherePasses(filter).WhereElementIsNotElementType().ToElements()
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
 
-OUT = FilteredElementCollector(_linkDoc).WherePasses(filter).WhereElementIsNotElementType().ToElements()
+#Assign your output to the OUT variable
+if errorReport == None:
+	OUT = result
+else:
+	OUT = errorReport
