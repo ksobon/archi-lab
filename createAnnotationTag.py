@@ -28,17 +28,25 @@ clr.AddReference("RevitAPI")
 import Autodesk
 from Autodesk.Revit.DB import *
 
+import sys
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
-points = UnwrapElement(IN[0])
-symType = UnwrapElement(IN[1])
-families = UnwrapElement(IN[2])
-views = UnwrapElement(IN[3])
-boolean = IN[4]
+locationPts = UnwrapElement(IN[0])
+tagType = UnwrapElement(IN[1])
+elements = UnwrapElement(IN[2])
+RunIt = IN[4]
+
+if isinstance(IN[3], list):
+	views = [UnwrapElement(i) for i in IN[3]]
+else:
+	views = UnwrapElement(IN[3])
 
 def toRvtPoint(point):
-	return Autodesk.Revit.DB.XYZ(point.X,point.Y,point.Z)
+	return point.ToXyz()
 
 def toRvtId(_id):
 	if isinstance(_id, int) or isinstance(_id, str):
@@ -47,36 +55,59 @@ def toRvtId(_id):
 	elif isinstance(_id, ElementId):
 		return _id
 
-def process_list(_func, _list):
-	return map( lambda x: process_list(_func, x) if type(x)==list else _func(x), _list )
+def ProcessList(_func, _list):
+	return map( lambda x: ProcessList(_func, x) if type(x)==list else _func(x), _list )
 
-symTypeId = toRvtId(symType.Id)
-rvtPoints = process_list(toRvtPoint, points)
+tagTypeId = toRvtId(tagType.Id)
 
-#"Start" the transaction
-TransactionManager.Instance.EnsureInTransaction(doc)
-
-msg = None
-if boolean:
-	tags = []
-	if len(views) != 1:
-		for i,j,k in zip(families,rvtPoints,views):
-			tag = doc.Create.NewTag(k, i, False, TagMode.TM_ADDBY_CATEGORY, TagOrientation.Horizontal, j)
-			tag.ChangeTypeId(symTypeId)
-			tags.append(tag)
+try:
+	errorReport = None
+	if RunIt:
+		if tagType.Category.Name == "Room Tags":
+			TransactionManager.Instance.EnsureInTransaction(doc)
+			roomTags = []
+			if isinstance(views, list):
+				for i, j, k in zip(elements, views, locationPts):
+					roomId = LinkElementId(i.Id)
+					location = Autodesk.Revit.DB.UV(toRvtPoint(k).X, toRvtPoint(k).Y)
+					roomTag = doc.Create.NewRoomTag(roomId, location, j.Id)
+					roomTag.RoomTagType = tagType
+					roomTags.append(roomTag)
+			else:
+				for i, j in zip(elements, locationPts):
+					roomId = LinkElementId(i.Id)
+					location = Autodesk.Revit.DB.UV(toRvtPoint(j).X, toRvtPoint(j).Y)
+					roomTag = doc.Create.NewRoomTag(roomId, location, views.Id)
+					roomTag.RoomTagType = tagType
+					roomTags.append(roomTag)
+			TransactionManager.Instance.TransactionTaskDone()
+			result = roomTags
+		else:
+			TransactionManager.Instance.EnsureInTransaction(doc)
+			tags = []
+			if isinstance(views, list):
+				for i,j,k in zip(elements, views, locationPts):
+					location = toRvtPoint(k)
+					tag = doc.Create.NewTag(j, i, False, TagMode.TM_ADDBY_CATEGORY, TagOrientation.Horizontal, location)
+					tag.ChangeTypeId(tagTypeId)
+					tags.append(tag)
+			else:
+				for i, j in zip(elements, locationPts):
+					location = toRvtPoint(j)
+					tag = doc.Create.NewTag(views, i, False, TagMode.TM_ADDBY_CATEGORY, TagOrientation.Horizontal, location)
+					tag.ChangeTypeId(tagTypeId)
+					tags.append(tag)
+			TransactionManager.Instance.TransactionTaskDone()
+			result = tags
 	else:
-		for i, j in zip(families, rvtPoints):
-			tag = doc.Create.NewTag(views, i, False, TagMode.TM_ADDBY_CATEGORY, TagOrientation.Horizontal, j)
-			tag.ChangeTypeId(symTypeId)
-			tags.append(tag)
-else:
-	msg = "Boolean set to false"
-
-# "End" the transaction
-TransactionManager.Instance.TransactionTaskDone()
+		result = "RunIt is set to False."
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
 
 #Assign your output to the OUT variable
-if msg != None:
-	OUT = msg
+if errorReport == None:
+	OUT = result
 else:
-	OUT = tags
+	OUT = errorReport
