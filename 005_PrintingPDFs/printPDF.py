@@ -28,6 +28,10 @@ clr.AddReference("RevitAPI")
 import Autodesk
 from Autodesk.Revit.DB import *
 
+import sys
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
@@ -39,29 +43,28 @@ printSetting = IN[4]
 filePath = IN[5]
 runIt = IN[6]
 
-message = "Success"
-if runIt:
+if isinstance(sheets, list):
 	viewSheets = []
 	for i in sheets:
 		viewSheets.append(UnwrapElement(i))
-	
+else:
+	viewSheets = UnwrapElement(sheets)
+
+def PrintView(doc, sheet, pRange, printerName, combined, filePath, printSetting):
+	# create view set 
 	viewSet = ViewSet()
-	if isinstance(sheets, list):
-		for i in sheets:
-			viewSheet = UnwrapElement(i)
-			viewSet.Insert(viewSheet)
-	else:
-		viewSheet = UnwrapElement(sheets)
-		viewSet.Insert(viewSheet)
-	
+	viewSet.Insert(sheet)
+	# determine print range
 	printManager = doc.PrintManager
 	printManager.PrintRange = pRange
 	printManager.Apply()
+	# make new view set current
 	viewSheetSetting = printManager.ViewSheetSetting
 	viewSheetSetting.CurrentViewSheetSet.Views = viewSet
-	
+	# set printer
 	printManager.SelectNewPrintDriver(printerName)
 	printManager.Apply()
+	# set combined and print to file
 	if printManager.IsVirtual:
 		printManager.CombinedFile = combined
 		printManager.Apply()
@@ -72,34 +75,47 @@ if runIt:
 		printManager.Apply()
 		printManager.PrintToFile = False
 		printManager.Apply()
-	
+	# set file path
 	printManager.PrintToFileName = filePath
 	printManager.Apply()
-
-	ps = FilteredElementCollector(doc).OfClass(PrintSetting)
-	for i in ps:
-		if i.Name == printSetting:
-			newPrintSetting = i
+	# apply print setting
 	try:
 		printSetup = printManager.PrintSetup
-		printSetup.CurrentPrintSetting = newPrintSetting
+		printSetup.CurrentPrintSetting = printSetting
 		printManager.Apply()
 	except:
 		pass
-			
-	# Start Transaction
-	doc = DocumentManager.Instance.CurrentDBDocument
+	# save settings and submit print
 	TransactionManager.Instance.EnsureInTransaction(doc)
-	
 	viewSheetSetting.SaveAs("tempSetName")
 	printManager.Apply()
 	printManager.SubmitPrint()
 	viewSheetSetting.Delete()
-	
-	# End Transaction
 	TransactionManager.Instance.TransactionTaskDone()
-else:
-	message = "Set RunIt to True"
+	
+	return True
 
+try:
+	errorReport = None
+	message = "Success"
+	if runIt:
+		if isinstance(viewSheets, list) and isinstance(printSetting, list):
+			for i, j in zip(viewSheets, printSetting):
+				PrintView(doc, i, pRange, printerName, combined, filePath, j)
+		elif isinstance(viewSheets, list) and not isinstance(printSetting, list):
+			for i in viewSheets:
+				PrintView(doc, i, pRange, printerName, combined, filePath, printSetting)
+		elif not isinstance(viewSheets, list) and not isinstance(printSetting, list):
+			PrintView(doc, viewSheets, pRange, printerName, combined, filePath, printSetting)
+	else:
+		message = "Set RunIt to True"
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
+	
 #Assign your output to the OUT variable
-OUT = message
+if errorReport == None:
+	OUT = message
+else:
+	OUT = errorReport
