@@ -47,6 +47,8 @@ def ProcessListArg(_func, _list, _arg):
 
 # Start Transaction
 TransactionManager.Instance.EnsureInTransaction(doc)
+# Regenerate
+TransactionManager.Instance.ForceCloseTransaction()
 
 try:
 	errorReport = None
