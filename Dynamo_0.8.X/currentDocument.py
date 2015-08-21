@@ -2,6 +2,7 @@
 # @arch_laboratory, http://archi-lab.net
 
 # Import DocumentManager
+import clr
 clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
