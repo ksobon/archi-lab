@@ -2,12 +2,12 @@
 # @arch_laboratory, http://archi-lab.net
 
 import clr
-import sys
 clr.AddReference('ProtoGeometry')
 from Autodesk.DesignScript.Geometry import *
 
+import sys
 pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
-sys.path.append(pyt_path
+sys.path.append(pyt_path)
 
 # Import Element wrapper extension methods
 clr.AddReference("RevitNodes")
