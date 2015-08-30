@@ -13,13 +13,25 @@ from RevitServices.Transactions import TransactionManager
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
+# Import Element wrapper extension methods
+clr.AddReference("RevitNodes")
+import Revit
+clr.ImportExtensions(Revit.Elements)
+
 # Import RevitAPI
 clr.AddReference("RevitAPI")
 import Autodesk
 from Autodesk.Revit.DB import *
-import System
 
-ps = FilteredElementCollector(doc).OfClass(PrintSetting)
+viewSet = UnwrapElement(IN[0])
+
+viewSets = FilteredElementCollector(doc).OfClass(ViewSheetSet)
+
+for i in viewSets:
+	if i.Name == viewSet.Name:
+		vs = i
+	else:
+		continue
 
 #Assign your output to the OUT variable
-OUT = [i.Name for i in ps]
+OUT = [i.ToDSType(True) for i in vs.Views]
