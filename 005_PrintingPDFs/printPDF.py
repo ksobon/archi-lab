@@ -96,6 +96,15 @@ def PrintView(doc, sheet, pRange, printerName, combined, filePath, printSetting)
 	return True
 
 try:
+	viewSets = FilteredElementCollector(doc).OfClass(ViewSheetSet)
+	for i in viewSets:
+		if i.Name == "tempSetName":
+			TransactionManager.Instance.EnsureInTransaction(doc)
+			doc.Delete(i.Id)
+			TransactionManager.Instance.ForceCloseTransaction()
+		else:
+			continue
+		
 	errorReport = None
 	message = "Success"
 	if runIt:
