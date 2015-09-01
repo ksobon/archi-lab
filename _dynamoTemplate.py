@@ -1,4 +1,4 @@
-#Copyright(c) 2015, Konrad K Sobon
+# Copyright(c) 2015, Konrad K Sobon
 # @arch_laboratory, http://archi-lab.net
 
 import clr
