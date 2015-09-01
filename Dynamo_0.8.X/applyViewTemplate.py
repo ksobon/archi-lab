@@ -1,4 +1,4 @@
-#Copyright(c) 2015, Konrad Sobon
+# Copyright(c) 2015, Konrad Sobon
 # @arch_laboratory, http://archi-lab.net
 
 import clr
@@ -18,25 +18,35 @@ from Autodesk.Revit.DB import *
 
 doc = DocumentManager.Instance.CurrentDBDocument
 
+import sys
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
 views = UnwrapElement(IN[0])
 viewTempName = IN[1]
 
-collector = FilteredElementCollector(doc).OfClass(View)
-for i in collector:
-	if i.IsTemplate == True and i.Name == viewTempName:
-		viewTemp = i
-
-# "Start" the transaction
-TransactionManager.Instance.EnsureInTransaction(doc)
-
-for i in views:
-	i.ViewTemplateId = viewTemp.Id
-
-# "End" the transaction
-TransactionManager.Instance.TransactionTaskDone()
+try:
+	errorReport = None
+	
+	collector = FilteredElementCollector(doc).OfClass(View)
+	for i in collector:
+		if i.IsTemplate == True and i.Name == viewTempName:
+			viewTemp = i
+			
+	TransactionManager.Instance.EnsureInTransaction(doc)
+	for i in views:
+		i.ViewTemplateId = viewTemp.Id
+	TransactionManager.Instance.TransactionTaskDone()
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
 
 #Assign your output to the OUT variable
-OUT = views
+if errorReport == None:
+	OUT = views
+else:
+	OUT = errorReport
