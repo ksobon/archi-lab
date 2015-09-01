@@ -28,6 +28,7 @@ dataEnteringNode = IN
 try:
 	errorReport = None
 	viewports = FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Viewports).WhereElementIsNotElementType().ToElements()
+	types = [doc.GetElement(i) for i in viewports[0].GetValidTypes()]
 except:
 	# if error accurs anywhere in the process catch it
 	import traceback
@@ -35,6 +36,6 @@ except:
 
 #Assign your output to the OUT variable
 if errorReport == None:
-	OUT = viewports
+	OUT = types
 else:
 	OUT = errorReport
