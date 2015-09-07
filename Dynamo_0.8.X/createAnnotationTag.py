@@ -55,8 +55,15 @@ def toRvtId(_id):
 	elif isinstance(_id, ElementId):
 		return _id
 
-def ProcessList(_func, _list):
-	return map( lambda x: ProcessList(_func, x) if type(x)==list else _func(x), _list )
+def GetUVPoint(pt):
+	if type(pt) == Autodesk.DesignScript.Geometry.Point:
+		return Autodesk.Revit.DB.UV(pt.X, pt.Y)
+	elif type(pt) == Autodesk.DesignScript.Geometry.UV:
+		return Autodesk.Revit.DB.UV(pt.U, pt.V)
+
+def CreateSpaceTag(space, uv, view):
+	doc = DocumentManager.Instance.CurrentDBDocument
+	return doc.Create.NewSpaceTag(space, uv, view)
 
 tagTypeId = toRvtId(tagType.Id)
 
@@ -80,6 +87,23 @@ try:
 					roomTag = doc.Create.NewRoomTag(roomId, location, views.Id)
 					roomTag.RoomTagType = tagType
 					roomTags.append(roomTag)
+			TransactionManager.Instance.TransactionTaskDone()
+			result = roomTags
+		elif tagType.Category.Name == "Space Tags":
+			TransactionManager.Instance.EnsureInTransaction(doc)
+			roomTags = []
+			if isinstance(views, list):
+				for i, j, k in zip(elements, views, locationPts):
+					uv = GetUVPoint(k)
+					spaceTag = CreateSpaceTag(i, uv, j)
+					spaceTag.SpaceTagType = tagType
+					roomTags.append(spaceTag)
+			else:
+				for i, j in zip(elements, locationPts):
+					uv = GetUVPoint(j)
+					spaceTag = CreateSpaceTag(i, uv, views)
+					spaceTag.SpaceTagType = tagType
+					roomTags.append(spaceTag)
 			TransactionManager.Instance.TransactionTaskDone()
 			result = roomTags
 		else:
