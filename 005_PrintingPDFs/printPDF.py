@@ -31,12 +31,13 @@ from Autodesk.Revit.DB import *
 import sys
 pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
 sys.path.append(pyt_path)
+import System
 
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
 sheets = IN[0]
-pRange = IN[1]
+pRange = System.Enum.Parse(Autodesk.Revit.DB.PrintRange, IN[1])
 combined = IN[2]
 printerName = IN[3]
 printSetting = IN[4]
