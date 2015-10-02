@@ -1,6 +1,9 @@
 #Copyright(c) 2015, Konrad K Sobon
 # @arch_laboratory, http://archi-lab.net
 
+# Huge thanks to Andreas Dieckmann for 
+# adding link path functionality
+
 import clr
 clr.AddReference('ProtoGeometry')
 from Autodesk.DesignScript.Geometry import *
@@ -34,10 +37,11 @@ dataEnteringNode = IN
 collector = Autodesk.Revit.DB.FilteredElementCollector(doc)
 linkInstances = collector.OfClass(Autodesk.Revit.DB.RevitLinkInstance)
 
-linkDoc, linkName = [], []
+linkDoc, linkName, linkPath = [], [], []
 for i in linkInstances:
 	linkDoc.append(i.GetLinkDocument())
 	linkName.append(i.Name)
+	linkPath.append(i.GetLinkDocument().PathName)
 
 
-OUT = linkDoc, linkName, linkInstances
+OUT = linkDoc, linkName, linkInstances, linkPath
