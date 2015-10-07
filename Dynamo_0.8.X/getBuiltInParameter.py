@@ -2,8 +2,12 @@
 # @arch_laboratory, http://archi-lab.net
 
 import clr
+import sys
 clr.AddReference('ProtoGeometry')
 from Autodesk.DesignScript.Geometry import *
+
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
 
 # Import Element wrapper extension methods
 clr.AddReference("RevitNodes")
@@ -60,19 +64,46 @@ def GetBuiltInParam(paramName):
 	return test[0]
 
 def GetBipValue(element, bip):
-	value = element.get_Parameter(bip).AsString()
-	return value
+	doc = DocumentManager.Instance.CurrentDBDocument
+	value = None
+	try:
+		tempValue = element.get_Parameter(bip)
+	except:
+		tempValue = None
+		pass
+	if tempValue != None:
+		if element.get_Parameter(bip).StorageType == StorageType.String:
+			value = element.get_Parameter(bip).AsString()
+		elif element.get_Parameter(bip).StorageType == StorageType.Integer:
+			value  = element.get_Parameter(bip).AsInteger()
+		elif element.get_Parameter(bip).StorageType == StorageType.Double:
+			value = element.get_Parameter(bip).AsDouble()
+		elif element.get_Parameter(bip).StorageType == StorageType.ElementId:
+			id = element.get_Parameter(bip).AsElementId()
+			value = doc.GetElement(id)
+		return value
+	else:
+		return None
 
-paramValues = []
-if isinstance(paramNames, list):
-	builtInParams = ProcessList(GetBuiltInParam, paramNames)
-	for i in builtInParams:
-		paramValues.append(ProcessListArg(GetBipValue, elements, i))
-else:
-	builtInParams = GetBuiltInParam(paramNames)
-	if isinstance(sheets, list):
-		for sheet in sheets:
-			paramValues.append(GetBipValue(sheet, builtInParams))
+try:
+	errorReport = None
+	paramValues = []
+	if isinstance(paramNames, list):
+		builtInParams = ProcessList(GetBuiltInParam, paramNames)
+		for i in builtInParams:
+			paramValues.append(ProcessListArg(GetBipValue, elements, i))
+	else:
+		builtInParams = GetBuiltInParam(paramNames)
+		if isinstance(sheets, list):
+			for sheet in sheets:
+				paramValues.append(GetBipValue(sheet, builtInParams))
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
 
 #Assign your output to the OUT variable
-OUT = paramValues
+if errorReport == None:
+	OUT = paramValues
+else:
+	OUT = errorReport
