@@ -41,13 +41,13 @@ dataEnteringNode = IN
 
 views = UnwrapElement(IN[0])
 filePath = IN[1]
-exportRange = IN[2]
-fileType = IN[3]
-zoomType = IN[4]
+exportRange = System.Enum.Parse(Autodesk.Revit.DB.ExportRange, IN[2])
+fileType = System.Enum.Parse(Autodesk.Revit.DB.ImageFileType, IN[3])
+zoomType = System.Enum.Parse(Autodesk.Revit.DB.ZoomFitType, IN[4])
 pixelSize = IN[5]
-imageRes = IN[6]
+imageRes = System.Enum.Parse(Autodesk.Revit.DB.ImageResolution, IN[6])
 zoom = IN[7]
-fitDirection = IN[8]
+fitDirection = System.Enum.Parse(Autodesk.Revit.DB.FitDirectionType, IN[8])
 RunIt = IN[9]
 
 def CreateViewSet(views):
