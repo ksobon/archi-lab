@@ -115,17 +115,18 @@ def process_list(_func, _list):
 
 try:
 	errorReport = None
-	#"Start" the transaction
 	TransactionManager.Instance.EnsureInTransaction(doc)
 	
 	rvtLines = process_list(toRvtType, dsObjects)
 	
 	elementsOut = []
 	for i in rvtLines:
-		instance = doc.Create.NewFamilyInstance(i, _symbol, _level, StructuralType.Beam)
-		elementsOut.append(instance)
-	
-	# "End" the transaction
+		try:
+			instance = doc.Create.NewFamilyInstance(i, _symbol, _level, StructuralType.Beam)
+			if instance != None:
+				elementsOut.append(instance)
+		except:
+			pass
 	TransactionManager.Instance.TransactionTaskDone()
 except:
 	# if error accurs anywhere in the process catch it
