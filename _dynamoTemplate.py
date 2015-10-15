@@ -45,6 +45,9 @@ def ProcessList(_func, _list):
 def ProcessListArg(_func, _list, _arg):
     return map( lambda x: ProcessListArg(_func, x, _arg) if type(x)==list else _func(x, _arg), _list )
 
+def ProcessParallelLists(_func, *lists):
+	return map( lambda *xs: ProcessParallelLists(_func, *xs) if all(type(x) is list for x in xs) else _func(*xs), *lists )
+
 # Start Transaction
 TransactionManager.Instance.EnsureInTransaction(doc)
 # Regenerate
