@@ -18,6 +18,10 @@ import RevitServices
 from RevitServices.Persistence import DocumentManager
 doc = DocumentManager.Instance.CurrentDBDocument
 
+import sys
+pyt_path = r'C:\Program Files (x86)\IronPython 2.7\Lib'
+sys.path.append(pyt_path)
+
 #The inputs to this node will be stored as a list in the IN variables.
 dataEnteringNode = IN
 
@@ -40,6 +44,17 @@ if isinstance(IN[0], list):
 	elements = ProcessList(Unwrap, IN[0])
 else:
 	elements = [Unwrap(IN[0])]
-	
-#Assign your output to the OUT variable.
-OUT = ProcessList(TryGetAssetId, elements)
+
+try:
+	errorReport = None
+	output = ProcessList(TryGetAssetId, elements)
+except:
+	# if error accurs anywhere in the process catch it
+	import traceback
+	errorReport = traceback.format_exc()
+
+#Assign your output to the OUT variable
+if errorReport == None:
+	OUT = output
+else:
+	OUT = errorReport
