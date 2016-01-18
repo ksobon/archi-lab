@@ -1,4 +1,4 @@
-#Copyright(c) 2015, Konrad K Sobon
+# Copyright(c) 2016, Konrad K Sobon
 # @arch_laboratory, http://archi-lab.net
 
 import clr
@@ -25,6 +25,7 @@ def ConvertToInteger(item):
 		return item
 
 input = ProcessList(ConvertToInteger, input)
+
 if any(isinstance(item,list) for item in input):
 	output = map(sum,input)
 else:
