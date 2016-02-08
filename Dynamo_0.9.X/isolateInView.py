@@ -1,11 +1,8 @@
-#Copyright(c) 2015, Konrad K Sobon
+# Copyright(c) 2016, Konrad K Sobon
 # @arch_laboratory, http://archi-lab.net
 
-import clr
-clr.AddReference('ProtoGeometry')
-from Autodesk.DesignScript.Geometry import *
-
 # Import Element wrapper extension methods
+import clr
 clr.AddReference("RevitNodes")
 import Revit
 clr.ImportExtensions(Revit.Elements)
@@ -15,7 +12,6 @@ clr.AddReference("RevitServices")
 import RevitServices
 from RevitServices.Persistence import DocumentManager
 from RevitServices.Transactions import TransactionManager
-
 doc = DocumentManager.Instance.CurrentDBDocument
 
 # Import RevitAPI
@@ -34,15 +30,38 @@ sys.path.append(pyt_path)
 #The inputs to this node will be stored as a list in the IN variable.
 dataEnteringNode = IN
 
-elem = IN[0]
 view = UnwrapElement(IN[1])
 
-if isinstance(elem, list):
-	lmnts = []
-	for i in elem:
-		lmnts.append(UnwrapElement(i))
+def ProcessList(_func, _list):
+    return map( lambda x: ProcessList(_func, x) if type(x)==list else _func(x), _list )
+
+def Unwrap(item):
+	try:
+		e = doc.GetElement(ElementId(int(item.Id)))
+		return e
+	except:
+		return None
+
+def ClearList(_list):
+    out = []
+    for _list1 in _list:
+        if _list1 is None:
+            continue
+        if not _list1:
+        	continue
+        if isinstance(_list1, list):
+             _list1 = ClearList(_list1)
+             if not _list1:
+                 continue
+        out.append(_list1)
+    return out
+
+if isinstance(IN[0], list):
+	lmnts = ProcessList(Unwrap, IN[0])
+	lmnts = ClearList(lmnts)
 else:
-	lmnts = UnwrapElement(elem)
+	lmnts = [Unwrap(elem)]
+	lmnts = ClearList(lmnts)
 
 try:
 	errorReport = None
@@ -63,6 +82,7 @@ try:
 	TransactionManager.Instance.EnsureInTransaction(doc)
 	view.HideElementsTemporary(new_collector)
 	TransactionManager.Instance.TransactionTaskDone()
+
 except:
 	# if error accurs anywhere in the process catch it
 	import traceback
@@ -70,6 +90,6 @@ except:
 
 #Assign your output to the OUT variable
 if errorReport == None:
-	OUT = "Success!"
+	OUT = lmnts
 else:
 	OUT = errorReport
