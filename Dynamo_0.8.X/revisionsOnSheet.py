@@ -1,4 +1,4 @@
-# Copyright(c) 2015, Konrad K Sobon
+# Copyright(c) 2016, Konrad K Sobon
 # @arch_laboratory, http://archi-lab.net
 
 import clr
@@ -43,7 +43,7 @@ try:
 	errorReport = None
 	revIds = []
 	for i in sheets:
-		revIds.append(list(i.GetAdditionalRevisionIds()))
+		revIds.append(list(i.GetAllRevisionIds()))
 	revisions = ProcessList(GetElement, revIds)
 except:
 	# if error accurs anywhere in the process catch it
