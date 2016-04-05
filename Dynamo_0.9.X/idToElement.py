@@ -52,9 +52,15 @@ def ProcessIds(_id):
 	if id == None:
 		return None
 	elif id[0] == "ElementId":
-		return doc.GetElement.Overloads[Autodesk.Revit.DB.ElementId](id[1]).ToDSType(True)
+		try:
+			return doc.GetElement.Overloads[Autodesk.Revit.DB.ElementId](id[1]).ToDSType(True)
+		except:
+			return None
 	else:
-		return doc.GetElement.Overloads[str](id[1]).ToDSType(True)
+		try:
+			return doc.GetElement.Overloads[str](id[1]).ToDSType(True)
+		except:
+			return None
 
 #unwrap incoming information for use with API
 if isinstance(IN[0], list):
