@@ -51,6 +51,13 @@ def ProcessParallelLists(_func, *lists):
 def Unwrap(item):
 	return UnwrapElement(item)
 
+# Convert single element to list
+def ToList(x):
+	if hasattr(x,'__iter__'): 
+		return x
+	else : 
+		return [x]
+
 # Start Transaction
 TransactionManager.Instance.EnsureInTransaction(doc)
 # Regenerate
