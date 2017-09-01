@@ -1,3 +1,15 @@
 // Add new field to all objects in a given collection
 
-db.configurations.update({}, {$set: {_id: ObjectId(), "sharedParamMonitor": {"monitorId": "32d44b45-7bf6-49f1-9b81-f41ae929cfcb", "monitorName": "Shared Parameter Monitor", "description": "This tool will monitor and make sure that the appropriate Shared Parameter file is being used on the project.", "filePath": " ", "addInName": "Mission Control", "isMonitorOn": false}}}, true, true)
+db.configurations.update(
+  {}, 
+  {$set: {
+    "sharedParamMonitor": {
+      _id: ObjectId(), 
+      "monitorId": "32d44b45-7bf6-49f1-9b81-f41ae929cfcb", 
+      "monitorName": "Shared Parameter Monitor", 
+      "description": "This tool will monitor and make sure that the appropriate Shared Parameter file is being used on the project.", 
+      "filePath": " ", 
+      "addInName": "Mission Control", 
+      "isMonitorOn": false}}}, 
+  true, 
+  true)
