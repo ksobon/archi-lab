@@ -16,5 +16,6 @@ db.configurations.update(
 // update specific field value by matching the updater id
 db.configurations.update(
   {"updaters.updaterId": "90391154-67BB-452E-A1A7-A07A98B94F86"},
-  {$set: {"updaters.$.description": "This tool will prevent users from Unloading Linked Revit files for \"all users\" which causes such Linked File to be unloaded by default when opening project."}}
+  {$set: {"updaters.description": "This tool will prevent users from Unloading Linked Revit files for \"all users\" which causes such Linked File to be unloaded by default when opening project."}},
+  {multi: true}
 )
