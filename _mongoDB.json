@@ -19,3 +19,27 @@ db.configurations.update(
   {$set: {"updaters.description": "This tool will prevent users from Unloading Linked Revit files for \"all users\" which causes such Linked File to be unloaded by default when opening project."}},
   {multi: true}
 )
+// add/update field for every object in an array
+db.addins.find({
+   "usageLogs":{"$exists":true}}).forEach(function(data){
+    for(var i=0;i<data.usageLogs.length;i++) {
+      db.addins.update(
+        {"_id": data._id, "usageLogs._id": data.usageLogs[i]._id},
+        {"$set": {"usageLogs.$.test": false}},
+        true,
+        true
+        );
+    }
+})
+// removes a field from a nested object
+db.addins.find({
+   "usageLogs":{"$exists":true}}).forEach(function(data){
+    for(var i=0;i<data.usageLogs.length;i++) {
+      db.addins.update(
+        {"_id": data._id, "usageLogs._id": data.usageLogs[i]._id},
+        {"$unset": {"usageLogs.$.executionTime": ""}},
+        true,
+        true
+        );
+    }
+})
