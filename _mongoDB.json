@@ -68,3 +68,20 @@ db.addins.find({
         );
     }
 })
+//update all nested objects with a matching value
+var query = {
+    usageLogs: {
+        $elemMatch: {
+            user: "konrad.sobon",
+            office: { $ne: "NY" }
+        }
+    }
+};
+
+while (db.addins.find(query).count() > 0) {
+    db.addins.update(
+        query,
+        { $set: { "usageLogs.$.office": "NY" } },
+        { multi: true }
+    );
+}
