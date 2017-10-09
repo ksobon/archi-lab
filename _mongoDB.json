@@ -43,3 +43,16 @@ db.addins.find({
         );
     }
 })
+//remove field from object
+db.getCollection('healthrecords').update(
+    {},
+    {$unset: {familyStats: ""}},
+    {multi: true}
+)
+//add/update field on oject
+db.getCollection('healthrecords').update(
+    {},
+    {$set: {familyStats: null}},
+    true,
+    true
+)
