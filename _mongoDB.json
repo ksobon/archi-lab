@@ -56,3 +56,15 @@ db.getCollection('healthrecords').update(
     true,
     true
 )
+// set user name to lower case
+db.addins.find({
+   "usageLogs":{"$exists":true}}).forEach(function(data){
+    for(var i=0;i<data.usageLogs.length;i++) {
+      db.addins.update(
+        {"_id": data._id, "usageLogs._id": data.usageLogs[i]._id},
+        {"$set": {"usageLogs.$.user": data.usageLogs[i].user.toLowerCase()}},
+        true,
+        true
+        );
+    }
+})
