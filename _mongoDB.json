@@ -56,6 +56,13 @@ db.getCollection('healthrecords').update(
     true,
     true
 )
+//set sheets to empty array
+db.getCollection('projects').update(
+    {},
+    {$set: {sheets: []}},
+    true,
+    true
+)
 // set user name to lower case
 db.addins.find({
    "usageLogs":{"$exists":true}}).forEach(function(data){
@@ -65,6 +72,18 @@ db.addins.find({
         {"$set": {"usageLogs.$.user": data.usageLogs[i].user.toLowerCase()}},
         true,
         true
+        );
+    }
+})
+//insert an empty array into an array in revers
+//needed this when it errored out doing it forwards
+db.addins.find({
+   "usageLogs":{"$exists":true}}).forEach(function(data){
+    for(var i = data.usageLogs.length; i--;) {
+      db.addins.update(
+        {"_id": data._id, "usageLogs._id": data.usageLogs[i]._id},
+        {"$set": {"usageLogs.$.detailInfo": []}},
+        {"upsert": true}
         );
     }
 })
