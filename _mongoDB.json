@@ -104,3 +104,10 @@ while (db.addins.find(query).count() > 0) {
         { multi: true }
     );
 }
+//update all central path values to lower case.
+db.triggerrecords.find().forEach(
+  function(e) {
+    e.centralPath = e.centralPath.toLowerCase();
+    db.triggerrecords.save(e);
+  }
+)
