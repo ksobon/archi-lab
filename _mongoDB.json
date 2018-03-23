@@ -111,3 +111,22 @@ db.triggerrecords.find().forEach(
     db.triggerrecords.save(e);
   }
 )
+//add new user overrides object to all health record updaters
+db.configurations.find().forEach(function(e) {
+    e.updaters.forEach(function(updater){
+        if (updater.updaterId == "56603be6-aeb2-45d0-9ebc-2830fad6368b"){
+            updater["userOverrides"] = {
+                "familyNameCheck": {
+                    "description": "Family Name Check:",
+                    "values": ["HOK_I", "HOK_M"]
+                    },
+                "dimensionValueCheck": {
+                    "description": "Dimension Override Check:",
+                    "values": ["EQ"]
+                    }
+                }
+            }
+        })
+    db.configurations.save(e);
+  }
+)
