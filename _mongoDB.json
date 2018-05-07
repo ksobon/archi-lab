@@ -130,3 +130,7 @@ db.configurations.find().forEach(function(e) {
     db.configurations.save(e);
   }
 )
+
+db.triggerrecords.find({'centralPath': { $regex : new RegExp("rsn://ny-28svr/13.07051.00 laguardia terminal b/ar/a12801375-3d-hhenc_central.rvt", "i") } }).forEach(function(doc){
+	db.triggerrecords2.update({'_id': ObjectId("5af0977625f7db49c4dfd2d8")}, {$push: {triggerRecords: doc}})
+});
