@@ -134,3 +134,13 @@ db.configurations.find().forEach(function(e) {
 db.triggerrecords.find({'centralPath': { $regex : new RegExp("rsn://ny-28svr/13.07051.00 laguardia terminal b/ar/a12801375-3d-hhenc_central.rvt", "i") } }).forEach(function(doc){
 	db.triggerrecords2.update({'_id': ObjectId("5af0977625f7db49c4dfd2d8")}, {$push: {triggerRecords: doc}})
 });
+
+// find a configuratio by central path
+db.configurations.find().forEach(function(e) {
+    e.files.forEach(function(file){
+      	var result = file.centralPath.match(/nashyards/i);
+      	if (result){
+      		print(e._id);
+      	}
+  	})
+})
