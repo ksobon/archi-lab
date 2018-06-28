@@ -1,7 +1,6 @@
 {
   "GitHubSettings": {
-    "Address": "https://github.com/HOKGroup/HOK-Revit-Addins",
-    "AccessToken": "aacd24d9a473ddd165080ad0e3228180f6ca7552"
+    "Address": "https://github.com/HOKGroup/HOK-Revit-Addins"
   },
   "LatestRelease": {
     "id": 11607602,
