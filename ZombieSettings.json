@@ -1,7 +1,5 @@
 {
-  "GitHubSettings": {
-    "Address": "https://github.com/HOKGroup/HOK-Revit-Addins"
-  },
+  "Address": "https://github.com/HOKGroup/HOK-Revit-Addins",
   "LatestRelease": {
     "id": 11691078,
     "tag_name": "2018.1.1.2",
@@ -84,14 +82,7 @@
       }
     ]
   },
-  "SourceAssets": [
-    {
-      "id": 0,
-      "name": "Placeholder.dll",
-      "size": 0,
-      "download_count": 0
-    }
-  ],
+  "SourceAssets": [],
   "DestinationAssets": [
     {
       "IsSourceLocation": false,
