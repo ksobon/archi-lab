@@ -1,1 +1,450 @@
-{message: "Here are some settings!"}
+{
+  "GitHubSettings": {
+    "Address": "https://github.com/HOKGroup/HOK-Revit-Addins",
+    "AccessToken": "aacd24d9a473ddd165080ad0e3228180f6ca7552"
+  },
+  "LatestRelease": {
+    "id": 11607602,
+    "tag_name": "2018.1.1.1",
+    "name": "testing releases",
+    "body": "asdasdasd",
+    "published_at": "2018-06-22T14:28:11Z",
+    "author": {
+      "login": "ksobon"
+    },
+    "assets": [
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657472",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/EngineIoClientDotNet.dll",
+        "id": 7657472,
+        "name": "EngineIoClientDotNet.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 83968,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668069",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/folder.png",
+        "id": 7668069,
+        "name": "folder.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 3722,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668071",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/folderHover.png",
+        "id": 7668071,
+        "name": "folderHover.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 3703,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668072",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/folderHover_32x32.png",
+        "id": 7668072,
+        "name": "folderHover_32x32.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 260,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668070",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/folder_32x32.png",
+        "id": 7668070,
+        "name": "folder_32x32.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 261,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657473",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/GalaSoft.MvvmLight.dll",
+        "id": 7657473,
+        "name": "GalaSoft.MvvmLight.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 29184,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657474",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/HOK.Core.dll",
+        "id": 7657474,
+        "name": "HOK.Core.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 72704,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657475",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/HOK.MissionControl.Core.dll",
+        "id": 7657475,
+        "name": "HOK.MissionControl.Core.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 75776,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657476",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/HOK.MissionControl.dll",
+        "id": 7657476,
+        "name": "HOK.MissionControl.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 295328,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668073",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/iconsZombie.png",
+        "id": 7668073,
+        "name": "iconsZombie.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 49767,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657477",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/MongoDB.Bson.dll",
+        "id": 7657477,
+        "name": "MongoDB.Bson.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 413696,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668074",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/msi.png",
+        "id": 7668074,
+        "name": "msi.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 7540,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668075",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/msi_32x32.png",
+        "id": 7668075,
+        "name": "msi_32x32.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 2496,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668076",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/remove.png",
+        "id": 7668076,
+        "name": "remove.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 15170,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668078",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/removeHover.png",
+        "id": 7668078,
+        "name": "removeHover.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 13614,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668079",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/removeHover_32x32.png",
+        "id": 7668079,
+        "name": "removeHover_32x32.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 442,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668077",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/remove_32x32.png",
+        "id": 7668077,
+        "name": "remove_32x32.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 452,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657478",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/RestSharp.dll",
+        "id": 7657478,
+        "name": "RestSharp.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 166912,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657479",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/SocketIoClientDotNet.dll",
+        "id": 7657479,
+        "name": "SocketIoClientDotNet.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 26624,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668080",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/unknown.png",
+        "id": 7668080,
+        "name": "unknown.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 3747,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668081",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/unknown_32x32.png",
+        "id": 7668081,
+        "name": "unknown_32x32.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 2183,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657480",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/WebSocket4Net.dll",
+        "id": 7657480,
+        "name": "WebSocket4Net.dll",
+        "state": "uploaded",
+        "content_type": "application/x-msdownload",
+        "size": 90624,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668082",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/zip.png",
+        "id": 7668082,
+        "name": "zip.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 4721,
+        "download_count": 0
+      },
+      {
+        "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668083",
+        "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/zip_32x32.png",
+        "id": 7668083,
+        "name": "zip_32x32.png",
+        "state": "uploaded",
+        "content_type": "image/png",
+        "size": 2603,
+        "download_count": 0
+      }
+    ]
+  },
+  "SourceAssets": [
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668072",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/folderHover_32x32.png",
+      "id": 7668072,
+      "name": "folderHover_32x32.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 260,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668070",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/folder_32x32.png",
+      "id": 7668070,
+      "name": "folder_32x32.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 261,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657473",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/GalaSoft.MvvmLight.dll",
+      "id": 7657473,
+      "name": "GalaSoft.MvvmLight.dll",
+      "state": "uploaded",
+      "content_type": "application/x-msdownload",
+      "size": 29184,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657476",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/HOK.MissionControl.dll",
+      "id": 7657476,
+      "name": "HOK.MissionControl.dll",
+      "state": "uploaded",
+      "content_type": "application/x-msdownload",
+      "size": 295328,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668073",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/iconsZombie.png",
+      "id": 7668073,
+      "name": "iconsZombie.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 49767,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657477",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/MongoDB.Bson.dll",
+      "id": 7657477,
+      "name": "MongoDB.Bson.dll",
+      "state": "uploaded",
+      "content_type": "application/x-msdownload",
+      "size": 413696,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668074",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/msi.png",
+      "id": 7668074,
+      "name": "msi.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 7540,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668075",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/msi_32x32.png",
+      "id": 7668075,
+      "name": "msi_32x32.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 2496,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668076",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/remove.png",
+      "id": 7668076,
+      "name": "remove.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 15170,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668078",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/removeHover.png",
+      "id": 7668078,
+      "name": "removeHover.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 13614,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668079",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/removeHover_32x32.png",
+      "id": 7668079,
+      "name": "removeHover_32x32.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 442,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668077",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/remove_32x32.png",
+      "id": 7668077,
+      "name": "remove_32x32.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 452,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657478",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/RestSharp.dll",
+      "id": 7657478,
+      "name": "RestSharp.dll",
+      "state": "uploaded",
+      "content_type": "application/x-msdownload",
+      "size": 166912,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657479",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/SocketIoClientDotNet.dll",
+      "id": 7657479,
+      "name": "SocketIoClientDotNet.dll",
+      "state": "uploaded",
+      "content_type": "application/x-msdownload",
+      "size": 26624,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668080",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/unknown.png",
+      "id": 7668080,
+      "name": "unknown.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 3747,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668081",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/unknown_32x32.png",
+      "id": 7668081,
+      "name": "unknown_32x32.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 2183,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7657480",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/WebSocket4Net.dll",
+      "id": 7657480,
+      "name": "WebSocket4Net.dll",
+      "state": "uploaded",
+      "content_type": "application/x-msdownload",
+      "size": 90624,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668082",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/zip.png",
+      "id": 7668082,
+      "name": "zip.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 4721,
+      "download_count": 0
+    },
+    {
+      "url": "https://api.github.com/repos/HOKGroup/HOK-Revit-Addins/releases/assets/7668083",
+      "browser_download_url": "https://github.com/HOKGroup/HOK-Revit-Addins/releases/download/2018.1.1.1/zip_32x32.png",
+      "id": 7668083,
+      "name": "zip_32x32.png",
+      "state": "uploaded",
+      "content_type": "image/png",
+      "size": 2603,
+      "download_count": 0
+    }
+  ]
+}
