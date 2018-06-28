@@ -167,6 +167,6 @@
       ]
     }
   ],
-  "RemoteSettingsLocation": "https://raw.githubusercontent.com/ksobon/archi-lab/master/ZombieSettings.json",
+  "RemoteSettingsLocation": "",
   "CheckFrequency": "h1"
 }
