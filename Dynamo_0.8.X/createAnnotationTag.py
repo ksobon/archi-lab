@@ -112,13 +112,13 @@ try:
 			if isinstance(views, list):
 				for i,j,k in zip(elements, views, locationPts):
 					location = toRvtPoint(k)
-					tag = doc.Create.NewTag(j, i, False, TagMode.TM_ADDBY_CATEGORY, TagOrientation.Horizontal, location)
+					tag = IndependentTag.Create(doc,j.Id, Reference(i), False, TagMode.TM_ADDBY_CATEGORY, TagOrientation.Horizontal, location)
 					tag.ChangeTypeId(tagTypeId)
 					tags.append(tag)
 			else:
 				for i, j in zip(elements, locationPts):
 					location = toRvtPoint(j)
-					tag = doc.Create.NewTag(views, i, False, TagMode.TM_ADDBY_CATEGORY, TagOrientation.Horizontal, location)
+					tag = IndependentTag.Create(doc,views.Id, Reference(i), False, TagMode.TM_ADDBY_CATEGORY, TagOrientation.Horizontal, location)
 					tag.ChangeTypeId(tagTypeId)
 					tags.append(tag)
 			TransactionManager.Instance.TransactionTaskDone()
