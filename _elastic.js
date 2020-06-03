@@ -48,3 +48,16 @@ GET _cluster/health/metricbeat-2020-7.4.2
 GET _cat/shards
 
 GET /_nodes/instance-0000000040/_all
+
+GET .kibana/_search
+{
+  "_source": ["index-pattern.title"],
+  "query": {
+    "bool": {
+      "must": [
+        {"match": {"index-pattern.title": "*revit*"}},
+        {"match": {"type": "index-pattern"}}
+        ]
+    }
+  }
+}
